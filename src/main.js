@@ -5,29 +5,67 @@ import {createProfileTemplate} from './view/profile-view.js';
 import {createFilmListTemplate, createFilmCardTemplate} from './view/film-list-view.js';
 import {createButtonShowMore} from './view/show-more-button-view.js';
 import {createFilmPopuptTemplate} from './view/popup-view.js';
+import {createNumberOfFilms} from './view/number-of-films.js';
+import {generateFilm, COMMENTS_ARRAY} from './mock/structures.js';
+import {generateFilter} from './filter.js';
+import {createFilmListExtra} from './view/film-list-extra.js';
 
-const TASK_COUNT = 5;
+const FILM_COUNT = 22;
+const FILM_COUNT_PER_STEP = 5;
+
+const films = Array.from({length: FILM_COUNT}, generateFilm);
+const filtres = generateFilter(films);
 
 const siteMainElement = document.querySelector('.main');
 const siteHeaderElement = document.querySelector('.header');
 const siteBodyElement = document.querySelector('body');
+const siteFooterElement = document.querySelector('footer');
 
-renderTemplate(siteMainElement, createSiteMenuTemplate(), RenderPosition.BEFOREEND);
+renderTemplate(siteMainElement, createSiteMenuTemplate(filtres), RenderPosition.BEFOREEND);
 renderTemplate(siteMainElement, createSortContent(), RenderPosition.BEFOREEND);
 renderTemplate(siteHeaderElement, createProfileTemplate(), RenderPosition.BEFOREEND);
 renderTemplate(siteMainElement, createFilmListTemplate(), RenderPosition.BEFOREEND);
 
 const filmListContainer = siteMainElement.querySelector('.films-list__container');
-
-for (let item = 0; item <TASK_COUNT; item++) {
-  renderTemplate(filmListContainer, createFilmCardTemplate(), RenderPosition.BEFOREEND);
-}
-
 const filmList = siteMainElement.querySelector('.films-list');
 
-renderTemplate(filmList, createButtonShowMore(), RenderPosition.BEFOREEND);
-renderTemplate(siteBodyElement, createFilmPopuptTemplate(), RenderPosition.BEFOREEND);
+for (let item = 0; item < Math.min(films.length, FILM_COUNT_PER_STEP); item++) {
+  renderTemplate(filmListContainer, createFilmCardTemplate(films[item]), RenderPosition.BEFOREEND);
+}
 
-//Скрыла попап временно, чтобы не закрывал основную страницу:
+if (films.length > FILM_COUNT_PER_STEP) {
+
+  let renderedFilmCount = FILM_COUNT_PER_STEP;
+  renderTemplate(filmList, createButtonShowMore(), RenderPosition.BEFOREEND);
+
+  const showMoreButton = filmList.querySelector('.films-list__show-more');
+
+  showMoreButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    films
+      .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
+      .forEach((film) => renderTemplate(filmListContainer, createFilmCardTemplate(film), RenderPosition.BEFOREEND));
+
+    renderedFilmCount += FILM_COUNT_PER_STEP;
+
+    if (renderedFilmCount >= films.length) {
+      showMoreButton.remove();
+    }
+  });
+}
+
+renderTemplate(siteBodyElement, createFilmPopuptTemplate(films[0], COMMENTS_ARRAY), RenderPosition.BEFOREEND);
+
 const popupElement = siteBodyElement.querySelector('.film-details');
 popupElement.style.display = 'none';
+
+renderTemplate(siteMainElement, createFilmListExtra(), RenderPosition.BEFOREEND);
+const firstExtraContainer = document.querySelector('#first-extra-container');
+const secondExtraContainer = document.querySelector('#second-extra-container');
+
+for (const film of films.slice(0, 2)) {
+  renderTemplate(firstExtraContainer, createFilmCardTemplate(film), RenderPosition.BEFOREEND);
+  renderTemplate(secondExtraContainer, createFilmCardTemplate(film), RenderPosition.BEFOREEND);
+}
+
+renderTemplate(siteFooterElement, createNumberOfFilms(films), RenderPosition.BEFOREEND);
