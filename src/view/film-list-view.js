@@ -1,24 +1,48 @@
-export const createFilmCardTemplate = () => (
-  `<article class="film-card">
+import {getDate, changeWord, addClassBySubmit} from '../utils.js';
+
+export const createFilmCardTemplate = (film) => {
+  const {title, runtime, genre, description, poster} = film['film_info'];
+  const rating = film['film_info']['total_rating'];
+  const date = film['film_info']['release']['date'];
+  const {watchlist} = film['user_details'];
+  const watchFilm = film['user_details']['already_watched'];
+  const favorite = film['user_details']['favorite'];
+
+  const year = getDate(date, 'YYYY');
+
+  const getTime = () => {
+    const hours = Math.trunc(runtime/60);
+    const minutes = runtime % 60;
+    return `${hours}h ${minutes}м`;
+  };
+
+  const getDescription = () => {
+    const text = description.join(' ');
+    const correctText = text.length > 139 ? `${text.slice(0, 139)}...` : text;
+    return correctText;
+  };
+
+
+  return `<article class="film-card">
   <a class="film-card__link">
-    <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
-    <p class="film-card__rating">2.3</p>
+    <h3 class="film-card__title">${title}</h3>
+    <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
-      <span class="film-card__year">1964</span>
-      <span class="film-card__duration">1h 21m</span>
-      <span class="film-card__genre">Comedy</span>
+      <span class="film-card__year">${year}</span>
+      <span class="film-card__duration">${getTime()}</span>
+      <span class="film-card__genre">${genre.join(', ')}</span>
     </p>
-    <img src="./images/posters/santa-claus-conquers-the-martians.jpg" alt="" class="film-card__poster">
-    <p class="film-card__description">The Martians Momar ("Mom Martian") and Kimar ("King Martian") are worried that their children Girmar ("Girl Martian") and Bomar ("Boy Marti…</p>
-    <span class="film-card__comments">465 comments</span>
+    <img src="${poster}" alt="" class="film-card__poster">
+    <p class="film-card__description">${getDescription()}</p>
+    <span class="film-card__comments">${film.comments.length} ${changeWord(film.comments, 'comment')}</span>
   </a>
   <div class="film-card__controls">
-    <button class="film-card__controls-item film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
-    <button class="film-card__controls-item film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
-    <button class="film-card__controls-item film-card__controls-item--favorite film-card__controls-item--active" type="button">Mark as favorite</button>
+    <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${addClassBySubmit(watchlist, 'film-card__controls-item--active')} type="button">Add to watchlist</button>
+    <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${addClassBySubmit(watchFilm, 'film-card__controls-item--active')}" type="button">Mark as watched</button>
+    <button class="film-card__controls-item film-card__controls-item--favorite ${addClassBySubmit(favorite, 'film-card__controls-item--active')}" type="button">Mark as favorite</button>
   </div>
-</article>`
-);
+</article>`;
+};
 
 export const createFilmListTemplate = () => (
   `<section class="films">
