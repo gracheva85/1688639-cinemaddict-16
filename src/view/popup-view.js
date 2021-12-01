@@ -1,4 +1,5 @@
 import {getDate, changeWord, addClassBySubmit} from '../utils.js';
+import {createElement} from '../render.js';
 
 const renderFilmDetailsTable = (name, value) => (
   `<tr class="film-details__row">
@@ -7,7 +8,7 @@ const renderFilmDetailsTable = (name, value) => (
 </tr>`
 );
 
-const renderElementGanre = (array) => {
+const renderElementGenre = (array) => {
   if (array.length > 0) {
     const box = [];
     for (const element of array)
@@ -43,9 +44,9 @@ const createCommentTemplate = (commentId, array) => {
   return commentBox;
 };
 
-export const createFilmPopuptTemplate = (film, array) => {
-  const {title, runtime, genre, description, poster, director, writers, actors} = film['film_info'];
-  const rating = film['film_info']['total_rating'];
+const createFilmPopupTemplate = (film, array) => {
+  const {title, runtime, genre, description, poster, director, writers, actors} = film.film_info;
+  const rating = film.film_info.total_rating;
   const date = film['film_info']['release']['date'];
   const {watchlist} = film['user_details'];
   const watchFilm = film['user_details']['already_watched'];
@@ -95,11 +96,11 @@ export const createFilmPopuptTemplate = (film, array) => {
               ${renderFilmDetailsTable('Release Date', dateFormat)}
               ${renderFilmDetailsTable('Runtime', getTime())}
               ${renderFilmDetailsTable('Country', country)}
-              ${renderFilmDetailsTable(changeWord(genre, 'Genre'), renderElementGanre(genre).join(' '))}
+              ${renderFilmDetailsTable(changeWord(genre, 'Genre'), renderElementGenre(genre).join(' '))}
             </table>
 
            <p class="film-details__film-description">
-            ${description.join(' ')}
+            ${description}
             </p>
           </div>
         </div>
@@ -153,3 +154,30 @@ export const createFilmPopuptTemplate = (film, array) => {
     </form>
   </section>`;
 };
+
+export default class Popup {
+  #element = null;
+  #film = null;
+  #array = null;
+
+  constructor(film, array) {
+    this.#film = film;
+    this.#array = array;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template(){
+    return createFilmPopupTemplate(this.#film, this.#array,);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

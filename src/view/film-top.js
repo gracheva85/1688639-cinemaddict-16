@@ -1,10 +1,10 @@
 import {createElement} from '../render.js';
 
-const createButtonShowMore = () => (
-  '<button class="films-list__show-more">Show more</button>'
+export const createFilmTop = () => (
+  '<div class="films-list__container"></div>'
 );
 
-export default class ButtonShowMore {
+export default class FilmTop {
   #element = null;
 
   get element() {
@@ -16,7 +16,7 @@ export default class ButtonShowMore {
   }
 
   get template(){
-    return createButtonShowMore();
+    return createFilmTop();
   }
 
   removeElement() {
