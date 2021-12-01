@@ -1,14 +1,22 @@
 import dayjs from 'dayjs';
 
-const FILM_TITLES = {
-  'Made for each other': 'images/posters/made-for-each-other.png',
-  'Popeye meets sinbad': 'images/posters/popeye-meets-sinbad.png',
-  'Sagebrush trail': 'images/posters/sagebrush-trail.jpg',
-  'Santa claus conquers the martians': 'images/posters/santa-claus-conquers-the-martians.jpg',
-  'The dance of life': 'images/posters/the-dance-of-life.jpg',
-  'The great flamarion': 'images/posters/the-great-flamarion.jpg',
-  'The man with the golden arm': 'images/posters/the-man-with-the-golden-arm.jpg',
-};
+const FILM_TITLES = [
+  'Made for each other',
+  'Popeye meets sinbad',
+  'Sagebrush trail',
+  'Santa claus conquers the martians',
+  'The dance of life',
+  'The great flamarion',
+  'The man with the golden arm'
+];
+
+const FILM_POSTERS = ['images/posters/made-for-each-other.png',
+  'images/posters/popeye-meets-sinbad.png',
+  'images/posters/sagebrush-trail.jpg',
+  'images/posters/santa-claus-conquers-the-martians.jpg',
+  'images/posters/the-dance-of-life.jpg',
+  'images/posters/the-great-flamarion.jpg',
+  'images/posters/the-man-with-the-golden-arm.jpg',];
 
 const DESCRIPTION = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -86,14 +94,6 @@ const getRandomLength = (array) => {
   return copyArray;
 };
 
-const filmsMap = new Map(Object.entries(FILM_TITLES));
-
-const generateValue = () => {
-  const randomIndex = getRandomInteger(0, [...filmsMap].length - 1);
-  const randomKey = [...filmsMap.keys()][randomIndex];
-  return randomKey;
-};
-
 const createIdGenerator = () => {
   let lastGeneratedId = 0;
 
@@ -121,36 +121,32 @@ const generateDate = () => {
   return dayjs().add(yearsGap, 'year').toDate();
 };
 
-const generateFilm = () => {
-  const randomTitle = generateValue();
-
-  return {
-    'id': generateFilmId(),
-    'comments': getCommentId(),
-    'film_info': {
-      'title': randomTitle,
-      'alternative_title': `Original: ${randomTitle}`,
-      'total_rating': getAnyRandomNumber(0, 10, 1),
-      'poster': filmsMap.get(randomTitle),
-      'age_rating': 18,
-      'director': 'Anthony Mann',
-      'writers': ['Anne Wigton', 'Heinz Herald', 'Richard Weil'],
-      'actors': ['Erich von Stroheim', 'Mary Beth Hughes', 'Dan Duryea'],
-      'release': {
-        'date': generateDate(),
-        'release_country': 'Finland',
-      },
-      'runtime': getRandomInteger(50, 200),
-      'genre': getRandomLength(GENRES),
-      'description': getRandomLength(DESCRIPTION),
+const generateFilm = () => ({
+  'id': generateFilmId().toString(),
+  'comments': getCommentId(),
+  'film_info': {
+    'title': FILM_TITLES[getRandomInteger(0, FILM_TITLES.length-1)],
+    'alternative_title': FILM_TITLES[getRandomInteger(0, FILM_TITLES.length-1)],
+    'total_rating': +getAnyRandomNumber(0, 10, 1),
+    'poster': FILM_POSTERS[getRandomInteger(0, FILM_POSTERS.length-1)],
+    'age_rating': 18,
+    'director': 'Anthony Mann',
+    'writers': ['Anne Wigton', 'Heinz Herald', 'Richard Weil'],
+    'actors': ['Erich von Stroheim', 'Mary Beth Hughes', 'Dan Duryea'],
+    'release': {
+      'date': generateDate(),
+      'release_country': 'Finland',
     },
-    'user_details': {
-      'watchlist': generateBoolean(),
-      'already_watched': generateBoolean(),
-      'watching_date': dayjs().toDate(),
-      'favorite': generateBoolean(),
-    }
-  };
-};
+    'runtime': getRandomInteger(50, 200),
+    'genre': getRandomLength(GENRES),
+    'description': getRandomLength(DESCRIPTION).join(' '),
+  },
+  'user_details': {
+    'watchlist': generateBoolean(),
+    'already_watched': generateBoolean(),
+    'watching_date': dayjs().toDate(),
+    'favorite': generateBoolean(),
+  }
+});
 
 export {generateFilm, COMMENTS_ARRAY};

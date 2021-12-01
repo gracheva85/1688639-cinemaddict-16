@@ -1,4 +1,5 @@
 import {getDate, changeWord, addClassBySubmit} from '../utils.js';
+import {createElement} from '../render.js';
 
 export const createFilmCardTemplate = (film) => {
   const {title, runtime, genre, description, poster} = film['film_info'];
@@ -17,8 +18,7 @@ export const createFilmCardTemplate = (film) => {
   };
 
   const getDescription = () => {
-    const text = description.join(' ');
-    const correctText = text.length > 139 ? `${text.slice(0, 139)}...` : text;
+    const correctText = description.length > 139 ? `${description.slice(0, 139)}...` : description;
     return correctText;
   };
 
@@ -44,12 +44,28 @@ export const createFilmCardTemplate = (film) => {
 </article>`;
 };
 
-export const createFilmListTemplate = () => (
-  `<section class="films">
-    <section class="films-list">
-      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+export default class FilmCard {
+  #element = null;
+  #film = null;
 
-      <div class="films-list__container"></div>
-    </section>
-  </section>`
-);
+  constructor(film) {
+    this.#film = film;
+  }
+
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template(){
+    return createFilmCardTemplate(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

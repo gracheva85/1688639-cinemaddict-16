@@ -1,19 +1,17 @@
 import {createElement} from '../render.js';
 
-const createNumberOfFilms = (films) => (
-  `<section class="footer__statistics">
-  <p>${new Intl.NumberFormat('ru').format(films.length)} movies inside</p>
-</section>`
-);
+const createFilmListTemplate = (films) => `<section class="films-list">
+    <h2 class="films-list__title ${films.length !== 0 && 'visually-hidden'}">${films.length !== 0 ? 'All movies. Upcoming' : 'There are no movies in our database'}</h2>
+  </section>`;
 
-export default class NumberOfFilms {
+
+export default class FilmList {
   #element = null;
   #films = null;
 
   constructor(films) {
     this.#films = films;
   }
-
 
   get element() {
     if (!this.#element) {
@@ -24,7 +22,7 @@ export default class NumberOfFilms {
   }
 
   get template(){
-    return createNumberOfFilms(this.#films);
+    return createFilmListTemplate(this.#films);
   }
 
   removeElement() {
