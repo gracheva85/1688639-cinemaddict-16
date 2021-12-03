@@ -1,5 +1,4 @@
-import {getFirstToUpperCase} from '../utils.js';
-import {createElement} from '../render.js';
+import { getFirstToUpperCase } from '../../utils/menu.js';
 
 const createMenuItemTemplate = (filter) => {
   const {name, count} = filter;
@@ -10,7 +9,7 @@ const createMenuItemTemplate = (filter) => {
   );
 };
 
-const createSiteMenuTemplate = (filterItems) => {
+export const createSiteMenuTemplate = (filterItems) => {
   const filterItemsTemplate = filterItems
     .map((filter, index) => createMenuItemTemplate(filter, index === 0))
     .join('');
@@ -20,28 +19,3 @@ const createSiteMenuTemplate = (filterItems) => {
       ${filterItemsTemplate}
     </div>`;
 };
-
-export default class MenuView {
-  #element = null;
-  #filters = null;
-
-  constructor(filters) {
-    this.#filters = filters;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  get template() {
-    return createSiteMenuTemplate(this.#filters);
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
-}

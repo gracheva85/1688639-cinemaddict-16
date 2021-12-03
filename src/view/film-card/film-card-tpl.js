@@ -1,5 +1,4 @@
-import {getDate, changeWord, addClassBySubmit} from '../utils.js';
-import {createElement} from '../render.js';
+import {getDate, changeWord, addClassBySubmit} from '../../utils/film.js';
 
 export const createFilmCardTemplate = (film) => {
   const {title, runtime, genre, description, poster} = film['film_info'];
@@ -43,29 +42,3 @@ export const createFilmCardTemplate = (film) => {
   </div>
 </article>`;
 };
-
-export default class FilmCard {
-  #element = null;
-  #film = null;
-
-  constructor(film) {
-    this.#film = film;
-  }
-
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  get template(){
-    return createFilmCardTemplate(this.#film);
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
-}
