@@ -1,5 +1,4 @@
-import {getDate, changeWord, addClassBySubmit} from '../utils.js';
-import {createElement} from '../render.js';
+import {getDate, changeWord, addClassBySubmit} from '../../utils/film.js';
 
 const renderFilmDetailsTable = (name, value) => (
   `<tr class="film-details__row">
@@ -44,7 +43,7 @@ const createCommentTemplate = (commentId, array) => {
   return commentBox;
 };
 
-const createFilmPopupTemplate = (film, array) => {
+export const createFilmPopupTemplate = (film, array) => {
   const {title, runtime, genre, description, poster, director, writers, actors} = film.film_info;
   const rating = film.film_info.total_rating;
   const date = film['film_info']['release']['date'];
@@ -154,30 +153,3 @@ const createFilmPopupTemplate = (film, array) => {
     </form>
   </section>`;
 };
-
-export default class Popup {
-  #element = null;
-  #film = null;
-  #array = null;
-
-  constructor(film, array) {
-    this.#film = film;
-    this.#array = array;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  get template(){
-    return createFilmPopupTemplate(this.#film, this.#array,);
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
-}

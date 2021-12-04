@@ -1,3 +1,6 @@
+import AbstractView from '../view/abstract-view.js';
+import {adjustElement} from './film.js';
+
 export const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
   AFTERBEGIN: 'afterbegin',
@@ -6,19 +9,23 @@ export const RenderPosition = {
 };
 
 export const render = (container, element, place) => {
+  const parent = adjustElement(container);
+  const child = adjustElement(element);
   switch (place) {
     case RenderPosition.BEFOREBEGIN:
-      container.before(element);
+      parent.before(child);
       break;
     case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      parent.prepend(child);
       break;
     case RenderPosition.BEFOREEND:
-      container.append(element);
+      parent.append(child);
       break;
     case RenderPosition.AFTEREND:
-      container.after(element);
+      parent.after(child);
       break;
+    default:
+      parent.append(child);
   }
 };
 
@@ -27,4 +34,17 @@ export const createElement = (template) => {
   newElement.innerHTML = template;
 
   return newElement.firstChild;
+};
+
+export const remove = (component) => {
+  if (component === null) {
+    return;
+  }
+
+  if (!(component instanceof AbstractView)) {
+    throw new Error('Can remove only components');
+  }
+
+  component.element.remove();
+  component.element.removeElement();
 };
