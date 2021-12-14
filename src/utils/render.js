@@ -1,14 +1,14 @@
 import AbstractView from '../view/abstract-view.js';
 import {adjustElement} from './film.js';
 
-export const RenderPosition = {
+const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
   AFTERBEGIN: 'afterbegin',
   BEFOREEND: 'beforeend',
   AFTEREND: 'afterend',
 };
 
-export const render = (container, element, place) => {
+const render = (container, element, place) => {
   const parent = adjustElement(container);
   const child = adjustElement(element);
   switch (place) {
@@ -29,14 +29,14 @@ export const render = (container, element, place) => {
   }
 };
 
-export const createElement = (template) => {
+const createElement = (template) => {
   const newElement = document.createElement('div');
   newElement.innerHTML = template;
 
   return newElement.firstChild;
 };
 
-export const remove = (component) => {
+const remove = (component) => {
   if (component === null) {
     return;
   }
@@ -46,5 +46,23 @@ export const remove = (component) => {
   }
 
   component.element.remove();
-  component.element.removeElement();
 };
+
+const replace = (newElement, oldElement) => {
+  if (newElement === null || oldElement === null) {
+    throw new Error('Can\'t replace unexisting elements');
+  }
+
+  const newChild = newElement instanceof AbstractView ? newElement.element : newElement;
+  const oldChild = oldElement instanceof AbstractView ? oldElement.element : oldElement;
+
+  const parent = oldChild.parentElement;
+
+  if (parent === null) {
+    throw new Error('Parent element doesn\'t exist');
+  }
+
+  parent.replaceChild(newChild, oldChild);
+};
+
+export {RenderPosition, render, createElement, remove, replace};
