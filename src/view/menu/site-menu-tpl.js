@@ -1,4 +1,4 @@
-import { getFirstToUpperCase } from '../../utils/menu.js';
+import {getFirstToUpperCase} from '../../utils/getFirstToUpperCase.js';
 
 const createMenuItemTemplate = (filter) => {
   const {name, count} = filter;

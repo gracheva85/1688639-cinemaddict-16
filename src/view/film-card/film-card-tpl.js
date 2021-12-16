@@ -1,12 +1,12 @@
-import {getDate, changeWord, addClassBySubmit} from '../../utils/film.js';
+import {getDate, changeWord, addClassBySubmit} from '../../utils/common.js';
 
 export const createFilmCardTemplate = (film) => {
   const {title, runtime, genre, description, poster} = film['film_info'];
   const rating = film['film_info']['total_rating'];
   const date = film['film_info']['release']['date'];
-  const {watchlist} = film['user_details'];
+  const {watchlist, favorite} = film['user_details'];
   const watchFilm = film['user_details']['already_watched'];
-  const favorite = film['user_details']['favorite'];
+  //const favorite = film['user_details']['favorite'];
 
   const year = getDate(date, 'YYYY');
 

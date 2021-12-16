@@ -1,7 +1,7 @@
 import {RenderPosition, render} from './utils/render.js';
 import {generateFilm} from './mock/structures.js';
 import {generateFilter} from './filter.js';
-import Profil from './view/profile-view.js';
+import Profile from './view/profile-view.js';
 import Navigation from './view/main-navigation.js';
 import MenuView from './view/menu/site-menu.js';
 import Stats from './view/stats.js';
@@ -20,7 +20,7 @@ const siteFooterElement = document.querySelector('footer');
 const siteBodyElement = document.querySelector('body');
 
 //Профиль:
-render(siteHeaderElement, new Profil(), RenderPosition.BEFOREEND);
+render(siteHeaderElement, new Profile(), RenderPosition.BEFOREEND);
 
 // Меню:
 const menuComponent = new Navigation();

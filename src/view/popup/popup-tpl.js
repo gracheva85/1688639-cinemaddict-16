@@ -1,4 +1,4 @@
-import {getDate, changeWord, addClassBySubmit} from '../../utils/film.js';
+import {getDate, changeWord, addClassBySubmit} from '../../utils/common.js';
 
 const renderFilmDetailsTable = (name, value) => (
   `<tr class="film-details__row">

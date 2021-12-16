@@ -1,5 +1,4 @@
 import AbstractView from '../view/abstract-view.js';
-import {adjustElement} from './film.js';
 
 const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
@@ -9,8 +8,8 @@ const RenderPosition = {
 };
 
 const render = (container, element, place) => {
-  const parent = adjustElement(container);
-  const child = adjustElement(element);
+  const parent = container instanceof AbstractView ? container.element : container;
+  const child = element instanceof AbstractView ? element.element : element;
   switch (place) {
     case RenderPosition.BEFOREBEGIN:
       parent.before(child);
@@ -46,6 +45,7 @@ const remove = (component) => {
   }
 
   component.element.remove();
+  component.removeElement();
 };
 
 const replace = (newElement, oldElement) => {
