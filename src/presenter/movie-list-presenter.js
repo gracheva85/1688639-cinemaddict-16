@@ -10,8 +10,6 @@ import {sortDate, sortRating, sortComments} from '../utils/common.js';
 import {FILM_BLOCKS} from '../view/consts.js';
 
 const FILM_COUNT_PER_STEP = 5;
-const EXTRA_CARD_COUNT = 2;
-
 export default class MovieListPresenter {
   #container = null;
   #popupContainer = null;
@@ -43,10 +41,7 @@ export default class MovieListPresenter {
     render(this.#container, this.#filmsComponent, RenderPosition.BEFOREEND);
     render(this.#filmsComponent, this.#filmMainComponent, RenderPosition.BEFOREEND);
 
-    //this.#clearFilmList();
-    //this.#clickSort();
-    this.#renderFilmsExtraTop();
-    this.#renderFilmsExtraComment();
+    this.#renderFilmsExtra();
     this.#renderFilmList();
   }
 
@@ -83,6 +78,7 @@ export default class MovieListPresenter {
 
   #clickSort = () => {
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
+    this.#renderFilmsExtra();
   }
 
   #renderFilm = (film, component) => {
@@ -131,14 +127,24 @@ export default class MovieListPresenter {
     }
   };
 
-  #renderFilmsExtraTop = () => {
+  #renderFilmsExtra = () => {
     render(this.#filmsComponent, this.#filmTopRatedComponent, RenderPosition.BEFOREEND);
-    this.#renderFilms(0, EXTRA_CARD_COUNT, this.#filmTopRatedComponent.container, sortRating);
-  }
+    const topLength = this.#filmTopRatedComponent.element.querySelector('.films-list__container').children.length;
 
-  #renderFilmsExtraComment = () => {
+    if (topLength < 2) {
+      for (const film of this.#films.sort(sortRating).slice(0, 2)) {
+        this.#renderFilm(film, this.#filmTopRatedComponent.container);
+      }
+    }
+
     render(this.#filmsComponent, this.#filmMostCommentedComponent, RenderPosition.BEFOREEND);
-    this.#renderFilms(0, EXTRA_CARD_COUNT, this.#filmMostCommentedComponent.container, sortComments);
+    const Length = this.#filmMostCommentedComponent.element.querySelector('.films-list__container').children.length;
+
+    if (Length < 2) {
+      for (const film of this.#films.sort(sortComments).slice(0, 2)) {
+        this.#renderFilm(film, this.#filmMostCommentedComponent.container);
+      }
+    }
   }
 
   #renderFilmList = () => {
