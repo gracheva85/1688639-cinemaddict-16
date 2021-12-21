@@ -1,19 +1,33 @@
-//import {getDate, changeWord, addClassBySubmit} from '../../utils.js';
 import {createFilmPopupTemplate} from './popup-tpl.js';
-import AbstractView from '../abstract-view.js';
-
-export default class Popup extends AbstractView {
+import SmartView from '../smart-view.js';
+export default class Popup extends SmartView {
   #film = null;
   #array = null;
 
   constructor(film, array) {
     super();
-    this.#film = film;
+    this._data = Popup.parseFilmToData(film);
     this.#array = array;
+    this.#setInnerHandlers();
   }
 
   get template(){
-    return createFilmPopupTemplate(this.#film, this.#array,);
+    return createFilmPopupTemplate(this._data, this.#array,);
+  }
+
+
+  reset = (film) => {
+    this.updateData(
+      Popup.parseFilmToData(film),
+    );
+  }
+
+  restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setPopupClickHandler(this._callback.popupClick);
+    this.setPopupWatchlistClickHandler(this._callback.popupWatchlistClick);
+    this.setPopupHistoryClickHandler(this._callback.popupHistoryClick);
+    this.setPopupFavoriteClickHandler( this._callback.popupFavoriteClick);
   }
 
   setPopupClickHandler = (callback) => {
@@ -36,10 +50,30 @@ export default class Popup extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#popupFavoriteClickHandler);
   }
 
+  #setInnerHandlers = () => {
+    this.element.querySelector('.film-details__emoji-list').addEventListener('change', this.#emojiItemsClickHandler);
+    this.element.querySelector('.film-details__comment-input').addEventListener('input', this.#descriptionInputHandler);
+  };
+
+  #emojiItemsClickHandler = (evt) => {
+    this.updateData({
+      emojiIcon: evt.target.value,
+      checkedEmojiItem: evt.target.id,
+    });
+  }
+
+  #descriptionInputHandler = (evt) => {
+    this.element.querySelector('.film-details__comment-input').textContent = evt.target.value;
+    this.updateData({
+      comment: evt.target.value,
+    }, true);
+  }
+
   #popupClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.popupClick(this.#film);
+    this._callback.popupClick(Popup.parseDataToFilm(this._data));
   }
+
 
   #popupWatchlistClickHandler = (evt) => {
     evt.preventDefault();
@@ -55,4 +89,22 @@ export default class Popup extends AbstractView {
     evt.preventDefault();
     this._callback.popupFavoriteClick();
   }
+
+  static parseFilmToData = (film) => ({...film,
+    emojiIcon: '',
+    checkedEmojiItem: '',
+    comment: '',
+    isDisabled: false,
+  });
+
+  static parseDataToFilm = (data) => {
+    const film = {...data};
+    delete film.emojiIcon;
+    delete film.checkedEmojiItem;
+    delete film.comment;
+    delete film.isDisabled;
+
+    return film;
+  };
+
 }
