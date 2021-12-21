@@ -22,3 +22,5 @@ export const FILM_BLOCKS = {
     isEmpty: true
   }
 };
+
+export const EMOJIS = ['smile', 'sleeping', 'puke', 'angry'];
