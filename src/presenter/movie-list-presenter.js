@@ -104,26 +104,27 @@ export default class MovieListPresenter {
     remove(prevFilmCardComponent);
   }
 
-  #onEscKeyDown = (evt, data) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      evt.preventDefault();
-      this.#closePopup(data);
-      document.removeEventListener('keydown', () => {this.#onEscKeyDown(evt, data);});
-      this.#mode = Mode.DEFAULT;
-    }
-  };
-
   #createPopup = (data) => {
+    const onEscKeyDown = (evt) => {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        this.#closePopup(data);
+        document.removeEventListener('keydown', onEscKeyDown);
+        this.#mode = Mode.DEFAULT;
+      }
+    };
+
     const prevPopupComponent = this.#popupComponent;
 
     this.#popupComponent = new Popup(data, this.#comments);
     render(this.#popupContainer, this.#popupComponent, RenderPosition.BEFOREEND);
 
     this.#popupContainer.classList.add('hide-overflow');
-    document.addEventListener('keydown', (evt) => {this.#onEscKeyDown(evt, data);});
+    document.addEventListener('keydown', onEscKeyDown);
 
     this.#popupComponent.setPopupClickHandler(() => {
       this.#closePopup(data);
+      document.removeEventListener('keydown', onEscKeyDown);
       this.#mode = Mode.DEFAULT;
     });
 
@@ -156,7 +157,7 @@ export default class MovieListPresenter {
     this.#popupComponent.reset(data);
     remove(this.#popupComponent);
     this.#popupContainer.classList.remove('hide-overflow');
-    document.removeEventListener('keydown', (evt) => {this.#onEscKeyDown(evt, data);});
+    //document.removeEventListener('keydown', (evt) => {this.#onEscKeyDown(evt, data);});
   };
 
   #filmUpdate = (updatedData) => {
