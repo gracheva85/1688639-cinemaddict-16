@@ -23,10 +23,20 @@ const updateItem = (items, update) => {
   ];
 };
 
+const  getFirstToUpperCase = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
+
 const sortDate = (filmA, filmB) => getDate(filmB.film_info.release.date, 'YYYY') - getDate(filmA.film_info.release.date, 'YYYY');
 
 const sortRating = (filmA, filmB) => filmB.film_info.total_rating - filmA.film_info.total_rating;
 
 const sortComments = (filmA, filmB) => filmB.comments.length - filmA.comments.length;
 
-export {getDate, changeWord, addClassBySubmit, adjustElement, updateItem, sortDate, sortRating, sortComments};
+const onEscKeyDown = (evt, cb) => {
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    evt.preventDefault();
+    cb(evt);
+  }
+};
+
+export {getDate, changeWord, addClassBySubmit, adjustElement, updateItem, sortDate, sortRating, sortComments, getFirstToUpperCase, onEscKeyDown};

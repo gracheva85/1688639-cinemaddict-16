@@ -29,8 +29,8 @@ render(menuComponent, new MenuView(filtres), RenderPosition.BEFOREEND);
 render(menuComponent, new Stats(), RenderPosition.BEFOREEND);
 
 //Фильмы, список:
-const movieListPresenter = new MovieListPresenter(siteMainElement, siteBodyElement);
-movieListPresenter.init(films);
+/*const movieListPresenter = */new MovieListPresenter(siteMainElement, siteBodyElement, films);
+//movieListPresenter.init(films);
 
 //Количество фильмов
 render(siteFooterElement, new NumberOfFilms(films), RenderPosition.BEFOREEND);

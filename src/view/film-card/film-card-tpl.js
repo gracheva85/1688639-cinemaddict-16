@@ -6,7 +6,6 @@ export const createFilmCardTemplate = (film) => {
   const date = film['film_info']['release']['date'];
   const {watchlist, favorite} = film['user_details'];
   const watchFilm = film['user_details']['already_watched'];
-  //const favorite = film['user_details']['favorite'];
 
   const year = getDate(date, 'YYYY');
 
@@ -20,7 +19,6 @@ export const createFilmCardTemplate = (film) => {
     const correctText = description.length > 139 ? `${description.slice(0, 139)}...` : description;
     return correctText;
   };
-
 
   return `<article class="film-card">
   <a class="film-card__link">
