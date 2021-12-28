@@ -1,6 +1,6 @@
 import {createFilmCardTemplate} from './film-card-tpl.js';
-import AbstractView from '../abstract-view.js';
 import {createElement} from '../../utils/render.js';
+import AbstractView from '../abstract-view.js';
 
 export default class FilmCard extends AbstractView {
   #film = null;
@@ -11,8 +11,12 @@ export default class FilmCard extends AbstractView {
     this.#film = film;
   }
 
-  get template(){
+  get template() {
     return createFilmCardTemplate(this.#film);
+  }
+
+  get renderedFilms() {
+    return this.#renderedFilms;
   }
 
   createCopy() {
@@ -24,10 +28,6 @@ export default class FilmCard extends AbstractView {
 
     this.#renderedFilms.push(copy);
     return copy;
-  }
-
-  get renderedFilms() {
-    return this.#renderedFilms;
   }
 
   setFilmClickHandler = (callback) => {

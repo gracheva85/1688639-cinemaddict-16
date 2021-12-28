@@ -10,7 +10,7 @@ export default class HeadingFilmList extends AbstractView {
     this.#films = films;
   }
 
-  get template(){
+  get template() {
     return headingFilmListTemplate(this.#films);
   }
 }

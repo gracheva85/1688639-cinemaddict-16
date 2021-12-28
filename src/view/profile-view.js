@@ -8,7 +8,7 @@ const createProfileTemplate = () => (
 );
 
 export default class Profile extends AbstractView {
-  get template(){
+  get template() {
     return createProfileTemplate();
   }
 }

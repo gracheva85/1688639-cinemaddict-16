@@ -14,7 +14,7 @@ export default class NumberOfFilms extends AbstractView {
     this.#films = films;
   }
 
-  get template(){
+  get template() {
     return createNumberOfFilms(this.#films);
   }
 }
