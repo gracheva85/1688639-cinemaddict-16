@@ -1,21 +1,26 @@
-import {getFirstToUpperCase} from '../../utils/get-first-to-upper-case.js';
+import {FilterType} from '../../consts.js';
 
-const createMenuItemTemplate = (filter) => {
-  const {name, count} = filter;
-
-  return (
-    `<a href="#${name}" class="main-navigation__item">${getFirstToUpperCase(name)} <span class="main-navigation__item-count">${count}</span></a>`
-
-  );
+const createMenuItemTemplate = (filter, currentFilterType) => {
+  const {type, name, count} = filter;
+  const menuActiveClass = 'main-navigation__item--active';
+  return (`<a
+      href="#${type}"
+      class="main-navigation__item ${type === currentFilterType ? `${menuActiveClass}` : ''}"
+      data-filter="${type}"
+      >
+      ${name}
+      ${type !== FilterType.ALL ? `<span data-filter="${type}" class="main-navigation__item-count">${count}</span>` : ''}
+    </a>`);
 };
 
-export const createSiteMenuTemplate = (filterItems) => {
+const createSiteMenuTemplate = (filterItems, currentFilterType) => {
   const filterItemsTemplate = filterItems
-    .map((filter, index) => createMenuItemTemplate(filter, index === 0))
+    .map((filter) => createMenuItemTemplate(filter, currentFilterType))
     .join('');
 
-  return   `<div class="main-navigation__items">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-      ${filterItemsTemplate}
-    </div>`;
+  return (`<div class="main-navigation__items">
+    ${filterItemsTemplate}
+  </div>`);
 };
+
+export {createSiteMenuTemplate};

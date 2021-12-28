@@ -5,7 +5,7 @@ const createButtonShowMore = () => (
 );
 
 export default class ButtonShowMore extends AbstractView {
-  get template(){
+  get template() {
     return createButtonShowMore();
   }
 

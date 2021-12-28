@@ -1,15 +1,5 @@
 import AbstractView from './abstract-view.js';
 
-// const createFilmListContainerTemplate = () => (
-//   '<div class="films-list__container"></div>'
-// );
-
-// export default class FilmListContainer extends AbstractView {
-//   get template(){
-//     return createFilmListContainerTemplate();
-//   }
-// }
-
 const createFilmListContainerTemplate = ({title, isTitleHidden, isExtra, isEmpty}) => (
   `<section class="films-list ${isExtra ? 'films-list--extra' : ''}">
     <h2 class="films-list__title ${isTitleHidden ? 'visually-hidden' : ''}">${title}</h2>

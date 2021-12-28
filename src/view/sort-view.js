@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view.js';
-import {SortType} from './consts.js';
+import {SortType} from '../consts.js';
 
 const addActiveClass = (isActive) => isActive ? ' sort__button--active' : '';
 
@@ -20,7 +20,7 @@ export default class SortView extends AbstractView {
     this.#currentSortType = currentSortType;
   }
 
-  get template(){
+  get template() {
     return createSortContent(this.#currentSortType);
   }
 

@@ -1,26 +1,21 @@
-import {getDate, changeWord, addClassBySubmit} from '../../utils/common.js';
+import {changeWord, addClassBySubmit} from '../../utils/common.js';
+import FormatTime from '../../utils/format-time.js';
+import {getHourFromMin} from '../../utils/common.js';
+import {DESCRIPTION_LENGTH} from '../../consts.js';
 
-export const createFilmCardTemplate = (film) => {
+const createFilmCardTemplate = (film) => {
   const {title, runtime, genre, description, poster} = film['film_info'];
   const rating = film['film_info']['total_rating'];
   const date = film['film_info']['release']['date'];
   const {watchlist, favorite} = film['user_details'];
   const watchFilm = film['user_details']['already_watched'];
-  //const favorite = film['user_details']['favorite'];
 
-  const year = getDate(date, 'YYYY');
-
-  const getTime = () => {
-    const hours = Math.trunc(runtime/60);
-    const minutes = runtime % 60;
-    return `${hours}h ${minutes}м`;
-  };
+  const year = FormatTime.getDate(date, 'YYYY');
 
   const getDescription = () => {
-    const correctText = description.length > 139 ? `${description.slice(0, 139)}...` : description;
+    const correctText = description.length > DESCRIPTION_LENGTH ? `${description.slice(0, DESCRIPTION_LENGTH)}...` : description;
     return correctText;
   };
-
 
   return `<article class="film-card">
   <a class="film-card__link">
@@ -28,7 +23,7 @@ export const createFilmCardTemplate = (film) => {
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
       <span class="film-card__year">${year}</span>
-      <span class="film-card__duration">${getTime()}</span>
+      <span class="film-card__duration">${getHourFromMin(runtime).hours}h ${getHourFromMin(runtime).mins}m</span>
       <span class="film-card__genre">${genre[0]}</span>
     </p>
     <img src="${poster}" alt="" class="film-card__poster">
@@ -42,3 +37,5 @@ export const createFilmCardTemplate = (film) => {
   </div>
 </article>`;
 };
+
+export {createFilmCardTemplate};
