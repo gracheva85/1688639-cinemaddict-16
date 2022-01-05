@@ -1,6 +1,7 @@
 import AbstractView from '../view/abstract-view.js';
 import FormatTime from './format-time.js';
-import {NUMBER_MINUTES_PER_HOUR} from '../consts.js';
+
+const NUMBER_MINUTES_PER_HOUR = 60;
 
 const changeWord = (array, word) => array.length === 1 ? word : `${word}s`;
 

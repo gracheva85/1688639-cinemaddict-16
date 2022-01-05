@@ -1,7 +1,8 @@
 import {changeWord, addClassBySubmit} from '../../utils/common.js';
 import FormatTime from '../../utils/format-time.js';
 import {getHourFromMin} from '../../utils/common.js';
-import {DESCRIPTION_LENGTH} from '../../consts.js';
+
+const DESCRIPTION_LENGTH = 139;
 
 const createFilmCardTemplate = (film) => {
   const {title, runtime, genre, description, poster} = film['film_info'];

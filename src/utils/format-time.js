@@ -1,10 +1,31 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {TIME_PERIOD} from '../consts.js';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
+
+const TIME_PERIOD = {
+  SECONDS: {
+    MAX: 60
+  },
+  MINUTES: {
+    MIN: 1,
+    MAX: 60
+  },
+  HOURS: {
+    MIN: 1,
+    MAX: 24
+  },
+  DAYS: {
+    MIN: 1,
+    MAX: 30
+  },
+  MONTHS: {
+    MIN: 1,
+    MAX: 12
+  },
+};
 
 export default class FormatTime {
   static getDate = (someDate, format) => dayjs(someDate).format(format);

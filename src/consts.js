@@ -1,58 +1,3 @@
-const NUMBER_MINUTES_PER_HOUR = 60;
-
-const CHART_VALUE = {
-  TYPE: 'horizontalBar',
-  BACKGROUND_COLOR: '#ffe800',
-  ANCOR: 'start',
-  THICKNESS: 24,
-  FONT_SIZE: 20,
-  FONT_COLOR: '#fff',
-  OFFSET: 40,
-  PADDING: 100,
-  HEIGHT: 50,
-};
-
-const DESCRIPTION_LENGTH = 139;
-
-const FILM_COUNT = {
-  PER_STEP: 5,
-  EXTRA: 2,
-};
-
-const TIME_PERIOD = {
-  SECONDS: {
-    MAX: 60
-  },
-  MINUTES: {
-    MIN: 1,
-    MAX: 60
-  },
-  HOURS: {
-    MIN: 1,
-    MAX: 24
-  },
-  DAYS: {
-    MIN: 1,
-    MAX: 30
-  },
-  MONTHS: {
-    MIN: 1,
-    MAX: 12
-  },
-};
-
-const AMOUNT_OF_TIME = {
-  DAY: 7,
-  MONTH: 1,
-  YEAR: 1
-};
-
-const Mode = {
-  DEFAULT: 'DEFAULT',
-  EDITING: 'EDITING',
-};
-
-
 const EMOJIS = ['smile', 'sleeping', 'puke', 'angry'];
 
 const SortType = {
@@ -87,9 +32,11 @@ const UserAction = {
 };
 
 const UpdateType = {
-  COMMENT: 'COMMENT',
+  DELETE: 'DELETE',
+  ADD: 'ADD',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT'
 };
 
 const FilterType = {
@@ -109,4 +56,10 @@ const StatisticsType = {
   YEAR: 'year'
 };
 
-export {SortType, FilmBlocks, EMOJIS, UserAction, UpdateType, FilterType, CHART_VALUE, StatisticsType, NUMBER_MINUTES_PER_HOUR, DESCRIPTION_LENGTH, FILM_COUNT, TIME_PERIOD, AMOUNT_OF_TIME, Mode};
+const State = {
+  ADDING: 'ADDING',
+  DELETING: 'DELETING',
+  ABORTING: 'ABORTING',
+};
+
+export {SortType, FilmBlocks, EMOJIS, UserAction, UpdateType, FilterType, StatisticsType, State};

@@ -10,7 +10,6 @@ const createFilmListContainerTemplate = ({title, isTitleHidden, isExtra, isEmpty
 
 export default class FilmListContainer extends AbstractView {
   #films = null;
-  #container = null;
 
   constructor(films) {
     super();
@@ -25,4 +24,3 @@ export default class FilmListContainer extends AbstractView {
     return this.element.querySelector('.films-list__container');
   }
 }
-
