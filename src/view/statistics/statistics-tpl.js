@@ -1,6 +1,4 @@
-
-// import {StatsTime} from '../consts.js';
-import {getTotalDuration, getTopGenre} from '../../utils/statistics.js';
+import {getTotalDuration, getTopGenre, getUserRank} from '../../utils/statistics.js';
 import {getHourFromMin} from '../../utils/common.js';
 
 const createFilterItemTemplate = (filter, currentFilter) => {
@@ -20,12 +18,11 @@ const createStatsScreenTemplate = (films, currentFilter, filters) => {
     .join('');
 
   return `<section class="statistic">
-  <p class="statistic__rank">
+  ${getUserRank(films) ? `<p class="statistic__rank">
     Your rank
     <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    <span class="statistic__rank-label">Movie buff</span>
-  </p>
-
+    <span class="statistic__rank-label">${getUserRank(films)}</span>
+  </p>` : ''}
   <form action="https://echo.htmlacademy.ru/" method="get" class="statistic__filters">
     <p class="statistic__filters-description">Show stats:</p>
   ${filterItemsTemplate}

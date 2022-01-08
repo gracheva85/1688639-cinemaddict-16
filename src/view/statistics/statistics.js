@@ -1,9 +1,21 @@
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import SmartView from '../smart-view.js';
-import {StatisticsType, CHART_VALUE} from '../../consts.js';
+import {StatisticsType} from '../../consts.js';
 import {getGenres, filmsToFilterMap} from '../../utils/statistics.js';
 import {createStatsScreenTemplate} from './statistics-tpl.js';
+
+const CHART_VALUE = {
+  TYPE: 'horizontalBar',
+  BACKGROUND_COLOR: '#ffe800',
+  ANCOR: 'start',
+  THICKNESS: 24,
+  FONT_SIZE: 20,
+  FONT_COLOR: '#fff',
+  OFFSET: 40,
+  PADDING: 100,
+  HEIGHT: 50,
+};
 
 const renderChart = (chartContainer, films) => {
   const BAR_HEIGHT = CHART_VALUE.HEIGHT;

@@ -1,6 +1,29 @@
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import {AMOUNT_OF_TIME} from '../consts.js';
+
+const AMOUNT_OF_TIME = {
+  DAY: 7,
+  MONTH: 1,
+  YEAR: 1
+};
+
+const StepsOfRank = {
+  NOVICE: {
+    MIN: 1,
+    MAX: 10
+  },
+  FAN: {
+    MIN: 11,
+    MAX: 20
+  }
+};
+
+const TitleRank = {
+  NONE: '',
+  NOVICE: 'Novice',
+  FAN: 'Fan',
+  MOVIE_BUFF: 'Movie Buff'
+};
 
 dayjs.extend(isBetween);
 
@@ -12,9 +35,9 @@ const yearDate = dayjs().subtract(AMOUNT_OF_TIME.YEAR, 'year').toDate();
 const filmsToFilterMap = {
   'all-time': (films) => films.filter((film) => film['user_details']['already_watched']),
   today: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isSame(currentDate, 'day')),
-  week: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isBetween(weekDate, currentDate)),
-  month: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isBetween(monthDate, currentDate)),
-  year: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isBetween(yearDate, currentDate)),
+  week: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isBetween(weekDate, currentDate, 'day', '[]')),
+  month: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isBetween(monthDate, currentDate, 'month', '[]')),
+  year: (films) => films.filter((film) => film['user_details']['already_watched'] && dayjs(film['user_details']['watching_date']).isBetween(yearDate, currentDate, 'year', '[]')),
 };
 
 const getTotalDuration = (films) => {
@@ -31,7 +54,7 @@ const getGenres = (films) => {
   const genresForStatistics = {};
 
   films
-    .reduce((acc, film) => acc.concat(film['film_info']['genre']), [])
+    .reduce((array, film) => array.concat(film['film_info']['genre']), [])
     .forEach((genre) => {
       if (genresForStatistics[genre]) {
         genresForStatistics[genre]++;
@@ -55,4 +78,18 @@ const getTopGenre = (films) => {
   return topGenreName;
 };
 
-export {filmsToFilterMap, getTotalDuration, getGenres, getTopGenre};
+const getUserRank = (films) => {
+  const totalWatch = films.reduce((count, film) => count + Number(film['user_details']['already_watched']), 0);
+
+  if (totalWatch >= StepsOfRank.NOVICE.MIN && totalWatch <= StepsOfRank.NOVICE.MAX) {
+    return TitleRank.NOVICE;
+  } else if (totalWatch >= StepsOfRank.FAN.MIN && totalWatch <= StepsOfRank.FAN.MAX) {
+    return TitleRank.FAN;
+  } else if (totalWatch > StepsOfRank.FAN.MAX) {
+    return TitleRank.MOVIE_BUFF;
+  } else {
+    return TitleRank.NONE;
+  }
+};
+
+export {filmsToFilterMap, getTotalDuration, getGenres, getTopGenre, getUserRank};
