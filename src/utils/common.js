@@ -1,4 +1,3 @@
-import AbstractView from '../view/abstract-view.js';
 import FormatTime from './format-time.js';
 
 const NUMBER_MINUTES_PER_HOUR = 60;
@@ -6,8 +5,6 @@ const NUMBER_MINUTES_PER_HOUR = 60;
 const changeWord = (array, word) => array.length === 1 ? word : `${word}s`;
 
 const addClassBySubmit = (submit, className) => submit ? className : '';
-
-const adjustElement = (container) => container instanceof AbstractView ? container.element : container;
 
 const sortDate = (filmA, filmB) => FormatTime.getDate(filmB.film_info.release.date, 'YYYY') - FormatTime.getDate(filmA.film_info.release.date, 'YYYY');
 
@@ -27,4 +24,4 @@ const getHourFromMin = (mins) => ({
   mins: mins % NUMBER_MINUTES_PER_HOUR,
 });
 
-export {changeWord, addClassBySubmit, adjustElement, sortDate, sortRating, sortComments, onEscKeyDown, getHourFromMin};
+export {changeWord, addClassBySubmit, sortDate, sortRating, sortComments, onEscKeyDown, getHourFromMin};

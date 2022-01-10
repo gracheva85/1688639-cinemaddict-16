@@ -8,7 +8,7 @@ const createProfileTemplate = (films) => (
   </section>`
 );
 
-export default class Profile extends AbstractView {
+export default class ProfileView extends AbstractView {
   #films = null;
 
   constructor(films) {

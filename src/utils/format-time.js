@@ -30,8 +30,6 @@ const TIME_PERIOD = {
 export default class FormatTime {
   static getDate = (someDate, format) => dayjs(someDate).format(format);
 
-  static getFullDateWithTime = (date) => dayjs(date).format('YYYY/MM/DD HH:mm')
-
   static getHumanizeDate = (date) => {
     const dateNow = dayjs();
     const dateComment = dayjs(date);

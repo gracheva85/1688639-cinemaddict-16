@@ -6,7 +6,7 @@ const createStats = () => (
 </nav>`
 );
 
-export default class Menu extends AbstractView {
+export default class MenuView extends AbstractView {
   get template() {
     return createStats();
   }

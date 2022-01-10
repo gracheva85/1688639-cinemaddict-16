@@ -7,7 +7,7 @@ import CommentsModel from './models/comments-model.js';
 import FilterModel from './models/filter-model.js';
 import FilterPresenter from './presenters/filter-presenter.js';
 import Statistics from './view/statistics/statistics.js';
-import Menu from './view/menu-view.js';
+import MenuView from './view/menu-view.js';
 import ApiService from './services/api-service.js';
 
 const AUTHORIZATION = 'Basic vkjbb6544dfbj40G';
@@ -20,7 +20,7 @@ const apiService = new ApiService(END_POINT, AUTHORIZATION);
 const moviesModel = new MoviesModel(apiService);
 const commentsModel = new CommentsModel(apiService);
 const filterModel = new FilterModel();
-const siteMenu = new Menu();
+const siteMenu = new MenuView();
 
 const movieListPresenter = new MovieListPresenter(siteMainElement, moviesModel, commentsModel, filterModel, apiService);
 new FilterPresenter(siteMenu, filterModel, moviesModel);

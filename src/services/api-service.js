@@ -18,40 +18,30 @@ export default class ApiService {
     return this.#load({url: 'movies'});
   }
 
-  getComments = async (filmId) => {
-    const response = await this.#load({ url: `comments/${filmId}` });
-    return response;
-  }
+  getComments = async (filmId) => await this.#load({ url: `comments/${filmId}` });
 
-  updateFilm = async (film) => {
-    const response = await this.#load({
-      url: `movies/${film.id}`,
-      method: Method.PUT,
-      body: JSON.stringify(film),
-      headers: new Headers({'Content-Type': 'application/json'}),
-    });
 
-    return response;
-  }
+  updateFilm = async (film) => await this.#load({
+    url: `movies/${film.id}`,
+    method: Method.PUT,
+    body: JSON.stringify(film),
+    headers: new Headers({'Content-Type': 'application/json'}),
+  });
 
   addComment = async (comment, filmId) => {
-    const response = await this.#load({
+    await this.#load({
       url: `comments/${filmId}`,
       method: Method.POST,
       body: JSON.stringify(comment),
       headers: new Headers({'Content-Type': 'application/json'}),
     });
-
-    return response;
   }
 
   deleteComment = async (comment) => {
-    const response = await this.#load({
+    await this.#load({
       url: `comments/${comment.id}`,
       method: Method.DELETE,
     });
-
-    return response;
   }
 
   #load = async ({

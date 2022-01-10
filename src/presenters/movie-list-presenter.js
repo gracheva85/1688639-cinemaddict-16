@@ -7,10 +7,10 @@ import Film from '../view/film.js';
 import FilmListContainer from '../view/films-list-container.js';
 import FilmCard from '../view/film-card/film-card.js';
 import Popup from '../view/popup/popup.js';
-import ButtonShowMore from '../view/show-more-button-view.js';
-import NoFilmContainer from '../view/no-film.js';
+import ShowMoreButtonView from '../view/show-more-button-view.js';
+import NoFilm from '../view/no-film.js';
 import LoadingView from '../view/loading-view.js';
-import Profile from '../view/profile-view.js';
+import ProfileView from '../view/profile-view.js';
 
 const FILM_COUNT = {
   PER_STEP: 5,
@@ -401,7 +401,7 @@ export default class MovieListPresenter {
   }
 
   #renderShowMoreButton = () => {
-    this.#buttonShowMoreComponent = new ButtonShowMore();
+    this.#buttonShowMoreComponent = new ShowMoreButtonView();
     this.#buttonShowMoreComponent.setClickHandler(this.#handlerShowMoreButtonClick);
     render(this.#filmMainComponent, this.#buttonShowMoreComponent, RenderPosition.BEFOREEND);
   }
@@ -411,14 +411,14 @@ export default class MovieListPresenter {
   }
 
   #renderNoFilms = () => {
-    this.#noFilmsComponent = new NoFilmContainer(this.#filterType);
+    this.#noFilmsComponent = new NoFilm(this.#filterType);
     render(this.#container, this.#noFilmsComponent, RenderPosition.BEFOREEND);
     remove(this.#loadingComponent);
   }
 
   #renderProfile = () => {
     remove(this.#profile);
-    this.#profile = new Profile(this.#moviesModel.films);
+    this.#profile = new ProfileView(this.#moviesModel.films);
     render(document.querySelector('.header'), this.#profile, RenderPosition.BEFOREEND);
   }
 
