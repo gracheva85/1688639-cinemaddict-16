@@ -9,20 +9,20 @@ const SortType = {
 const FilmBlocks = {
   main: {
     title: 'All movies. Upcoming',
-    isTitleHidden: true
+    isTitleHidden: true,
   },
   topRated: {
     title: 'Top rated',
-    isExtra: true
+    isExtra: true,
   },
   mostCommented: {
     title: 'Most commented',
-    isExtra: true
+    isExtra: true,
   },
   empty: {
     title: 'There are no movies in our database',
-    isEmpty: true
-  }
+    isEmpty: true,
+  },
 };
 
 const UserAction = {
@@ -36,7 +36,7 @@ const UpdateType = {
   ADD: 'ADD',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
-  INIT: 'INIT'
+  INIT: 'INIT',
 };
 
 const FilterType = {
@@ -53,7 +53,7 @@ const StatisticsType = {
   TODAY: 'today',
   WEEK: 'week',
   MONTH: 'month',
-  YEAR: 'year'
+  YEAR: 'year',
 };
 
 const State = {

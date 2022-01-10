@@ -4,25 +4,25 @@ import isBetween from 'dayjs/plugin/isBetween';
 const AMOUNT_OF_TIME = {
   DAY: 7,
   MONTH: 1,
-  YEAR: 1
+  YEAR: 1,
 };
 
 const StepsOfRank = {
   NOVICE: {
     MIN: 1,
-    MAX: 10
+    MAX: 10,
   },
   FAN: {
     MIN: 11,
-    MAX: 20
-  }
+    MAX: 20,
+  },
 };
 
 const TitleRank = {
   NONE: '',
   NOVICE: 'Novice',
   FAN: 'Fan',
-  MOVIE_BUFF: 'Movie Buff'
+  MOVIE_BUFF: 'Movie Buff',
 };
 
 dayjs.extend(isBetween);
