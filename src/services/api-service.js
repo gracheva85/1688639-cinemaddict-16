@@ -15,13 +15,12 @@ export default class ApiService {
   }
 
   get films() {
-    return this.#load({url: 'movies'})
-      .then(ApiService.parseResponse);
+    return this.#load({url: 'movies'});
   }
 
   getComments = async (filmId) => {
     const response = await this.#load({ url: `comments/${filmId}` });
-    return ApiService.parseResponse(response);
+    return response;
   }
 
   updateFilm = async (film) => {
@@ -32,9 +31,7 @@ export default class ApiService {
       headers: new Headers({'Content-Type': 'application/json'}),
     });
 
-    const parsedResponse = await ApiService.parseResponse(response);
-
-    return parsedResponse;
+    return response;
   }
 
   addComment = async (comment, filmId) => {
@@ -45,9 +42,7 @@ export default class ApiService {
       headers: new Headers({'Content-Type': 'application/json'}),
     });
 
-    const parsedResponse = await ApiService.parseResponse(response);
-
-    return parsedResponse;
+    return response;
   }
 
   deleteComment = async (comment) => {
@@ -74,7 +69,7 @@ export default class ApiService {
 
     try {
       ApiService.checkStatus(response);
-      return response;
+      return ApiService.parseResponse(response);
     } catch (error) {
       ApiService.catchError(error);
     }

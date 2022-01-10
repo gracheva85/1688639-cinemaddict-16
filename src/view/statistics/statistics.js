@@ -112,7 +112,7 @@ export default class Statistics extends SmartView {
   }
 
   get template() {
-    return createStatsScreenTemplate(this.#data, this.#currentFilter, this.#filters);
+    return createStatsScreenTemplate(this.#data, this.#currentFilter, this.#filters, this.#watchedFilms);
   }
 
   removeElement = () => {

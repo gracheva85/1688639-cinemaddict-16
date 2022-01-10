@@ -8,7 +8,7 @@ import FilterModel from './models/filter-model.js';
 import FilterPresenter from './presenters/filter-presenter.js';
 import Statistics from './view/statistics/statistics.js';
 import Menu from './view/menu-view.js';
-import ApiService from './api-service.js';
+import ApiService from './services/api-service.js';
 
 const AUTHORIZATION = 'Basic vkjbb6544dfbj40G';
 const END_POINT = 'https://16.ecmascript.pages.academy/cinemaddict';
