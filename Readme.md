@@ -23,6 +23,8 @@ _`.editorconfig`, `.gitattributes`._
 
 ### Код, написанный в процессе работы над провектом, расположен в папке "src".
 
+### На изучение материалов и написание проекта ушло 2 месяца.
+
 Учебный проект с версткой и стилями был предоставлен HTML Academy.
 
 <a href="https://htmlacademy.ru/intensive/ecmascript"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/ecmascript/logo-for-github.svg"></a>
